@@ -13,7 +13,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     
     @IBOutlet weak var labelText: UILabel!
-    @IBOutlet weak var beaconProx: UILabel!
+    @IBOutlet weak var bText: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,25 +37,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         if beacons.count > 0 {
             print(beacons)
-            updateDistance(beacons[0].proximity)
+            self.bText.text =  "UUID: \(beacons[0].proximityUUID). \nmajor: \(beacons[0].major)\nminor: \(beacons[0].minor) \nrssi: \(beacons[0].rssi) \naccuracy: \(beacons[0].accuracy) \n"
         } else {
-            NSLog("Beacon not found")
+            self.bText.text = "Beacon not found"
         }
     }
     
     func updateDistance(_ distance: CLProximity) {
         switch distance {
             case .unknown:
-                self.beaconProx.text = "Unknown"
+                self.bText.text = "Unknown"
                 
             case .far:
-                self.beaconProx.text = "Far"
+                self.bText.text = "Far"
             
             case .near:
-                self.beaconProx.text = "Near"
+                self.bText.text = "Near"
                 
             case .immediate:
-                self.beaconProx.text = "Immediate"
+                self.bText.text = "Immediate"
         }
      }
 
